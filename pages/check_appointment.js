@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Box, Button, Input, Text,
   Table,
@@ -13,11 +13,28 @@ import {
 import cogoToast from 'cogo-toast'
 import axios from 'axios'
 import moment from 'moment'
+import { useRouter } from 'next/router'
 
 const CheckAppointment = () => {
+  const router = useRouter()
   const [id, setId] = useState('')
   const [patient, setPatient] = useState('')
   const [appointments, setAppointments] = useState([])
+
+  useEffect(() => {
+    (async () => {
+      if (router.query.id) {
+        const res = await axios.get(`/my_booking?id=${router.query.id}`)
+        if (!res.data.patient) {
+          setPatient('')
+          setAppointments([])
+          return
+        }
+        setPatient(res.data.patient)
+        setAppointments(res.data.appointments)
+      }
+    })()
+  }, [router.query.id])
   const search = async () => {
     if (!id) {
       return

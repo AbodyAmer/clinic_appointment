@@ -42,6 +42,8 @@ const BookDoctor = () => {
         name, customerId, phone, date, time, description, doctorId: router.query.id
       })
       await loader.hide()
+      cogoToast.success('Success')
+      router.push(`/check_appointment?id=${customerId}`)
     } catch (error) {
       console.log(error)
     }
