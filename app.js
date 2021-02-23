@@ -220,6 +220,17 @@ app.prepare().then(() => {
       res.status(500).json({ message: error.message })
     }
   })
+  server.get('/dashboard/delete_doctor', async (req, res) => {
+    try {
+      const { id } = req.query
+      await Doctor.deleteOne({ id })
+      await Appointment.deleteMany({ doctorId: id })
+      res.redirect('/dashboard/doctors')
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ message: error.message })
+    }
+  })
   server.post('/update_doctor', async (req, res) => {
     try {
       const { id, doctorName, doctorPrice, selectedClinic, selectedSpecialty } = req.body

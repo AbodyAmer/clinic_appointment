@@ -91,8 +91,11 @@ const Doctors = () => {
                             <br />
                             <Text as='span' display='inline-block' fontWeight='bold'>Specialty:  </Text><Text as='span' display='inline-block'> {doctor.setSpecialty}</Text>
                           </Box>
-                          <Box>
+                          <Box mr='2'>
                             <Button as='a' href={`/dashboard/update_doctor?id=${doctor.id}`} size='sm' mt={2}>UPDATE</Button>
+                          </Box>
+                          <Box>
+                            <Button as='a' href={`/dashboard/delete_doctor?id=${doctor.id}`} colorScheme='red' size='sm' mt={2}>DELETE</Button>
                           </Box>
                         </Flex>
                       </Box>
