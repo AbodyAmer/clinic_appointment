@@ -8,6 +8,8 @@ const adminSchema = new mongoose.Schema({
   time: { type: String },
   date: { type: Date },
   description: { type: String },
+  patientEmail: String,
+  patientCountry: String,
   status: { type: String, enum: ['PAID', 'PENDING', 'CANCELED'] }
 }, { timestamps: true })
 

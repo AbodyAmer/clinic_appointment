@@ -13,6 +13,8 @@ const Doctors = () => {
   const [doctorPrice, setDoctorPrice] = useState(0)
   const [selectedClinic, setSelectedClinic] = useState('')
   const [selectedSpecialty, setSpecialty] = useState('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [doctors, setDoctors] = useState([])
 
   useEffect(() => {
@@ -28,7 +30,7 @@ const Doctors = () => {
   const addDoctor = async () => {
     const laoder = cogoToast.loading('Add a new doctor', { hideAfter: 0 })
     try {
-      if (!doctorName || !doctorPrice || !selectedClinic || !selectedSpecialty) {
+      if (!doctorName || !doctorPrice || !selectedClinic || !selectedSpecialty || !username || !password) {
         await laoder.hide()
         cogoToast.error('Please add all the details')
         return
@@ -37,12 +39,20 @@ const Doctors = () => {
         doctorName,
         doctorPrice,
         selectedClinic,
-        selectedSpecialty
+        selectedSpecialty,
+        username,
+        password
       })
       await laoder.hide()
       cogoToast.success('Success')
     } catch (error) {
       console.log(error)
+      await laoder.hide()
+      if (error.response) {
+        cogoToast.error(error.response.data.message)
+      } else {
+        cogoToast.error('Error')
+      }
     }
   }
   return (
@@ -116,6 +126,14 @@ const Doctors = () => {
                         <option value={c.id} key={c.id}>{c.label}</option>
                       ))}
                     </Select>
+                  </FormControl>
+                  <FormControl isRequired>
+                    <FormLabel>username</FormLabel>
+                    <Input bg='#fff' onChange={(e) => setUsername(e.target.value)} />
+                  </FormControl>
+                  <FormControl isRequired>
+                    <FormLabel>Passowrd</FormLabel>
+                    <Input bg='#fff' onChange={(e) => setPassword(e.target.value)} />
                   </FormControl>
                   <Box mt={2}>
                     <Button bg='#017581' color='#fff' onClick={addDoctor}>Submit</Button>

@@ -6,7 +6,9 @@ const doctorSchema = new mongoose.Schema({
   name: { type: String },
   price: { type: Number },
   clinicId: String,
-  setSpecialty: String
+  setSpecialty: String,
+  username: String,
+  password: String
 }, { timestamps: true })
 
 module.exports = mongoose.model('Doctors', doctorSchema)
