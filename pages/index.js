@@ -52,8 +52,11 @@ export default function Home () {
 
       <main className={styles.main}>
         <Box bg='#fef14b' color='#00234b' py={4} px={20}>
-          <Link color='#00234b' href='/check_appointment'>
+          <Link mr={10} color='#00234b' href='/check_appointment'>
             Check your appointments
+          </Link>
+          <Link mr={10} color='#00234b' href='/contact'>
+            Contact Us
           </Link>
         </Box>
         <Box bg='#d7e4f4' minH='100vh' px='20'>

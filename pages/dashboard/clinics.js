@@ -79,9 +79,16 @@ export default function Dashboard (props) {
                 <Box>
                   {clinics.map(clinic => (
                     <Box key={clinic.id} p={4} mb={4} bg='#fff' border='1px solid #eee' borderRadius={3}>
-                      <Text as='span' display='inline-block' fontWeight='bold'>Name: </Text><Text as='span' display='inline-block'>{clinic.name}</Text>
-                      <br />
-                      <Text as='span' display='inline-block' fontWeight='bold'>Address: </Text><Text>{clinic.address}, {clinic.city}, {clinic.state}</Text>
+                      <Flex>
+                        <Box w='80%'>
+                          <Text as='span' display='inline-block' fontWeight='bold'>Name: </Text><Text as='span' display='inline-block'>{clinic.name}</Text>
+                          <br />
+                          <Text as='span' display='inline-block' fontWeight='bold'>Address: </Text><Text>{clinic.address}, {clinic.city}, {clinic.state}</Text>
+                        </Box>
+                        <Box>
+                          <Button as='a' href={`/deleteclinic?id=${clinic.id}`} colorScheme='red'>Delete</Button>
+                        </Box>
+                      </Flex>
                     </Box>
                   ))}
                 </Box>

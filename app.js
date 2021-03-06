@@ -13,6 +13,7 @@ const Appointment = require('./models/appointments')
 const moment = require('moment')
 const sendEmail = require('./sendConfirmEmail')
 const cancelEmail = require('./cancelEmail')
+const sendContact = require('./sendContact')
 
 const port = parseInt(process.env.PORT, 10) || 3000
 const dev = process.env.NODE_ENV !== 'production'
@@ -90,6 +91,33 @@ app.prepare().then(() => {
     }
   })
 
+  server.post('/conact', async (req, res) => {
+    try {
+      const { email, subject, message } = req.body
+      sendContact(email, subject, message)
+      res.end()
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ message: error.message })
+    }
+  })
+  server.get('/deleteclinic', async (req, res) => {
+    try {
+      const { id } = req.query
+      console.log(id)
+      const a = await Clinics.deleteOne({ id })
+      console.log(a)
+      const doctors = await Doctor.find({ clinicId: id }).lean()
+      await Promise.all(doctors.map(async d => {
+        await Appointment.deleteMany({ doctorId: d.id })
+        await Doctor.deleteOne({ id: d.id })
+      }))
+      res.redirect('/dashboard/clinics')
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ message: error.message })
+    }
+  })
   server.get('/get_doctor_detail', async (req, res) => {
     try {
       const doctor = await Doctor.findOne({ id: req.cookies.doctor }).lean()
